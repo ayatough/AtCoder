@@ -1,0 +1,1 @@
+a,b,c,d;main(){scanf("%d%d%d%d",&a,&b,&c,&d);printf("%d %d %d %d",c-d+b,d+c-a,b-d+a,c-a+b);}
