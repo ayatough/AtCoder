@@ -2,37 +2,53 @@ N, K = map(int, input().split())
 A = list(map(int, input().split()))
 MOD = 10**9+7
 
-A.sort(key=lambda x: abs(x), reverse=True)
-best = [1, -1]
-k = [0, 0]
-for a in A:
-    if a == 0:
-        break
-    elif a > 0:
-        if k[0] < K:
-            best[0] = (best[0]*a)%MOD
-            k[0] += 1
-        if k[1] < K:
-            if k[1] > 0:
-                best[1] = (best[1]*a)%MOD
-                k[1] += 1
-    else:
-        tbest = best.copy()
-        tk = k.copy()
-        if k[1] < K:
-            if k[1] > 0:
-                if tbest[0] < tbest[1]*a:
-                    best[0] = (tbest[1]*a)%MOD
-                    k[0] = tk[1]+1
-        if k[0] < K:
-            if tbest[1] > tbest[0]*a:
-                best[1] = (tbest[0]*a)%MOD
-                k[1] = tk[0]+1
+def solve():
+    A.sort(key=lambda x: abs(x), reverse=True)
 
-if k[0] == K:
-    ans = best[0]
-else:
     ans = 1
+    nneg = 0
+    a, b, c, d = -1, -1, -1, -1
     for k in range(K):
-        ans = (ans*A[-1-k])%MOD
-print(ans)
+        ans = (ans * A[k])%MOD
+        if A[k] < 0:
+            nneg += 1
+            b = k
+        else:
+            a = k
+    
+    if K == N or nneg%2 == 0:
+        return ans
+    
+    for k in range(N-1, K-1, -1):
+        if A[k] < 0:
+            d = k
+        else:
+            c = k
+
+    # b must be >= 0
+    if a == -1 and c == -1: # all minus
+        ans = 1
+        for k in range(K):
+            ans = (ans * A[-1-k])%MOD
+        return ans
+    
+    if a == -1 or d == -1:
+        outn = A[b]
+        inn = A[c]
+    elif c == -1:
+        outn = A[a]
+        inn = A[d]
+    else:
+        if A[a]*A[c] > A[b]*A[d]:
+            outn = A[b]
+            inn = A[c]
+        else:
+            outn = A[a]
+            inn = A[d]
+
+    ans = (ans * pow(outn, MOD-2, MOD))%MOD
+    ans = (ans * inn)%MOD
+    return ans
+
+if __name__ == "__main__":
+    print(solve())
