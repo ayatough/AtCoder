@@ -8,12 +8,12 @@ def get_divisor(n):
             d.add(n//i)
     return d
 
-def cmb(n, r, mod):
-    '''nCrを返却(modは素数であるべし)
-    '''
-    from functools import reduce
-    r = min(n-r, r)
-    if r == 0: return 1
-    over = reduce(lambda x, y : x*y % mod, range(n, n-r, -1))
-    under = reduce(lambda x, y : x*y % mod, range(1, r+1))
-    return (over * pow(under, mod-2, mod)) % mod
+FCT = [1]
+for i in range(1, M+1):
+    FCT.append((FCT[-1] * i)%MOD)
+
+def pmu(n, r, mod=MOD):
+    return (FCT[n] * pow(FCT[n-r], mod-2, mod)) % mod
+
+def cmb(n, r, mod=MOD):
+    return (pmu(n, r) * pow(FCT[r], mod-2, mod)) % mod
