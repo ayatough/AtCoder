@@ -4,10 +4,11 @@ A = list(map(int, input().split()))
 
 
 def solve():
-    memo = [0] * M
+    amax = max(A)+1
+    memo = [0] * amax
     for a in A:
         i = 1
-        while i*a < M:
+        while i*a < amax:
             memo[i*a] += 1
             i += 1
 
