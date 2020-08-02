@@ -1,23 +1,27 @@
 from math import ceil
 N, K = map(int, input().split())
 A = list(map(int, input().split()))
+A.sort(reverse=True)
+
+def possible(x):
+    count = 0
+    for a in A:
+        if a <= x:
+            return True
+        count += int(ceil(a/x)) - 1
+        if count > K:
+            return False
+    return True
 
 def solve():
-    memo = [[0, 0] for _ in range(N+1)]
-    cum = 0
-    tot = sum(A)
-    A.sort(reverse=True)
-    for i in range(1,N+1):
-        a = A[i-1]
-        pre = cum
-        cum += a
-        plo = pre * K // tot
-        phi = int(ceil(pre * K / tot))
-        clo = cum * K // tot
-        chi = int(ceil(cum * K / tot))
-        memo[i][0] = min(max(memo[i-1][0], a / max(1,clo-plo+1)), max(memo[i-1][1], a / max(1,clo-phi+1)))
-        memo[i][1] = min(max(memo[i-1][0], a / max(1,chi-plo+1)), max(memo[i-1][1], a / max(1,chi-phi+1)))
-    return int(ceil(min(memo[-1])))
+    lo, hi = 0, A[0]
+    while lo < hi-1:
+        mi = (hi + lo) // 2
+        if possible(mi):
+            hi = mi
+        else:
+            lo = mi
+    return hi
 
 if __name__ == "__main__":
     print(solve())
