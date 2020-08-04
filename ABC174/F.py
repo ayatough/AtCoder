@@ -39,7 +39,7 @@ def solve():
             nst += 1
         memo[c-1] = N-i-1
     # ST.sort(reverse=True)
-    LR.sort(reverse=True)
+    LR.sort(reverse=True, key=lambda x:x[0])
     ans =[0 for _ in range(Q)]
     ft = FenwickTree(N+1)
     j = 0
