@@ -3,10 +3,10 @@ input = sys.stdin.readline
 
 N, Q = map(int, input().split())
 C = list(map(int, input().split()))
-LRST = []
+LR = []
 for i in range(Q):
     l, r = map(int, input().split())
-    LRST.append((l-1, 0, r-1, i))
+    LR.append((l-1, r-1, i))
 
 
 class FenwickTree(object):
@@ -31,21 +31,24 @@ class FenwickTree(object):
 
 def solve():
     memo = [-1] * N
-    for i, c in enumerate(C):
+    ST = []
+    nst = 0
+    for i, c in enumerate(C[::-1]):
         if memo[c-1] >= 0:
-            LRST.append((memo[c-1], 1, i, -1))
-        memo[c-1] = i
-    LRST.sort(reverse=True)
+            ST.append((N-i-1, memo[c-1]))
+            nst += 1
+        memo[c-1] = N-i-1
+    # ST.sort(reverse=True)
+    LR.sort(reverse=True)
     ans =[0 for _ in range(Q)]
     ft = FenwickTree(N+1)
-    for sl, typ, tr, q in LRST:
-        if typ == 1:
-            ft.add(tr, 1)
-        else:
-            ans[q] = tr - sl + 1 - ft.sum(tr)
-    for a in ans:
-        print(a)
-
+    j = 0
+    for l, r, i in LR:
+        while j < nst and ST[j][0] >= l:
+            ft.add(ST[j][1], 1)
+            j += 1
+        ans[i] = r - l + 1 - ft.sum(r)
+    return ans
 
 if __name__ == "__main__":
-    solve()
+    print('\n'.join(map(str, solve())))
