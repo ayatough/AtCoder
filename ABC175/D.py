@@ -4,51 +4,28 @@ C = list(map(int, input().split()))
 INF = 10**9+1
 
 def solve():
-    cycles = []
-    memo = [False] * N
-    i = 0
-    while i < N-1:
-        cycle = []
-        j = i
-        while not memo[j]:
-            cycle.append(j)
-            memo[j] = True
-            j = P[j] - 1
-        k = i
-        for i in range(k, N):
-            if not memo[i]:
-                break
-        cycles.append(cycle)
-
     ans = -INF
 
-    for cycle in cycles:
-        n = len(cycle)
-        # q, r = divmod(K-1, n)
-        # r += 1
-        memo = [-INF] * n
-        for i in range(n):
-            s = 0
-            for j in range(n):
-                s += C[cycle[(i+j)%n]]
-                memo[j] = max(memo[j], s)
-        tmpmax = -INF
-        imax = -1
-        if K < n:
-            for i in range(K):
-                if tmpmax < memo[i]:
-                    tmpmax = memo[i]
-                    imax = i+1
+    for i in range(N):
+        memo = [0] * (N+1)
+        j = 0
+        p = i
+        while j < N:
+            memo[j+1] = memo[j] + C[p]
+            p = P[p] - 1
+            j += 1
+            if p == i:
+                break
+        tans =-INF
+        if memo[j] > 0:
+            for k in range(j):
+                q = (K-k-1) // j
+                tans = max(tans, memo[k+1] + memo[j] * q)
         else:
-            if memo[-1] > 0:
-                for i in range(n):
-                    q = (K-i-1) // n
-                    tmpmax = max(tmpmax, memo[i] + memo[-1] * q)
-            else:
-                for i in range(n):
-                    tmpmax = max(tmpmax, memo[i])
+            for k in range(min(K, j)):
+                tans = max(tans, memo[k+1])
 
-        ans = max(ans, tmpmax)
+        ans = max(ans, tans)
     return ans
 
 if __name__ == "__main__":
