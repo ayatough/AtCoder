@@ -4,40 +4,52 @@ C = list(map(int, input().split()))
 INF = 10**9+1
 
 def solve():
-    q, r = divmod(K, N)
-    if r == 0:
-        q -= 1
-        r = N
-    
-    m = -INF
+    cycles = []
+    memo = [False] * N
+    i = 0
+    while i < N-1:
+        cycle = []
+        j = i
+        while not memo[j]:
+            cycle.append(j)
+            memo[j] = True
+            j = P[j] - 1
+        k = i
+        for i in range(k, N):
+            if not memo[i]:
+                break
+        cycles.append(cycle)
 
-    
+    ans = -INF
 
-    # memo = [[-INF] * N for _ in range(N-1)]
-    # memomax = [-INF] * (N-1)
-    # memo[0] = C.copy()
-    # memomax[0] = max(memo[0])
-    # for i in range(1,N-1):
-    #     tmp = -INF
-    #     for j in range(N):
-    #         memo[i][j] = memo[i-1] + P[i]
+    for cycle in cycles:
+        n = len(cycle)
+        # q, r = divmod(K-1, n)
+        # r += 1
+        memo = [-INF] * n
+        for i in range(n):
+            s = 0
+            for j in range(n):
+                s += C[cycle[(i+j)%n]]
+                memo[j] = max(memo[j], s)
+        tmpmax = -INF
+        imax = -1
+        if K < n:
+            for i in range(K):
+                if tmpmax < memo[i]:
+                    tmpmax = memo[i]
+                    imax = i+1
+        else:
+            if memo[-1] > 0:
+                for i in range(n):
+                    q = (K-i-1) // n
+                    tmpmax = max(tmpmax, memo[i] + memo[-1] * q)
+            else:
+                for i in range(n):
+                    tmpmax = max(tmpmax, memo[i])
 
-    # s = C[0]
-    # i = P[0]-1
-    # j = 0
-    # for _ in range(r-1):
-    #     s += C[i]
-    #     i = P[i]-1
-    # m = max(m, s)
-
-    # for _ in range(r-1):
-    #     tmp = m - C[j] + C[i]
-    #     m = max(m, tmp)
-    #     j = P[j]-1
-    #     i = P[i]-1
-
-    if q == 0
-
+        ans = max(ans, tmpmax)
+    return ans
 
 if __name__ == "__main__":
     print(solve())
