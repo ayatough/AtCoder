@@ -14,8 +14,10 @@ https://atcoder.jp/users/qython
 ## PR contents
 
 I raise PullRequest each contest.
+
 I write my code explanations and impressions of the target contest.
-these contens are written in japnese.
+
+These contens are written in japanese.
 
 ## issue type
 
