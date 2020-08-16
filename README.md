@@ -11,6 +11,12 @@ https://atcoder.jp/users/qython
 - AC: AC without help of editorial
 - AC*: AC with help of editorial
 
+## PR contents
+
+I raise PullRequest each contest.
+I write my code explanations and impressions of the target contest.
+these contens are written in japnese.
+
 ## issue type
 
 - yet to solve: difficult to solve, then leave them as homework
