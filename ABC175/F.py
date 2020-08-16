@@ -2,6 +2,7 @@ import sys
 sys.setrecursionlimit(10**9)
 
 INF = 10**12
+LIM = 20
 N = int(input())
 D = dict()
 for _ in range(N):
@@ -27,6 +28,8 @@ def find_candidate(cost, use, s, is_left):
             # reversed s is included in the end of t
             if t[::-1].find(s) == 0:
                 use[t] += 1
+                if use[t] > LIM:
+                    return INF
                 c = find_candidate(cost, use, t[:-len(s):], False)
                 cost = min(cost, c)
                 use[t] -= 1
