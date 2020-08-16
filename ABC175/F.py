@@ -19,7 +19,7 @@ def check_kaibun(s):
 def calc_cost(use):
     return sum(D[s] * n for (s, n) in use.items())
 
-def find_candidate(cost, use, s, is_left):
+def calc_updated_cost(cost, use, s, is_left):
     if check_kaibun(s):
         return min(cost, calc_cost(use))
 
@@ -30,13 +30,13 @@ def find_candidate(cost, use, s, is_left):
                 use[t] += 1
                 if use[t] > LIM:
                     return INF
-                c = find_candidate(cost, use, t[:-len(s):], False)
+                c = calc_updated_cost(cost, use, t[:-len(s):], False)
                 cost = min(cost, c)
                 use[t] -= 1
             # reveresed t is included in the begin of s
             elif s.find(t[::-1]) == 0:
                 use[t] += 1
-                c = find_candidate(cost, use, s[len(t):], True)
+                c = calc_updated_cost(cost, use, s[len(t):], True)
                 cost = min(cost, c)
                 use[t] -= 1
     else:
@@ -44,13 +44,13 @@ def find_candidate(cost, use, s, is_left):
             # t is included in the end of reversed s
             if s[::-1].find(t) == 0:
                 use[t] += 1
-                c = find_candidate(cost, use, s[:-len(t):], False)
+                c = calc_updated_cost(cost, use, s[:-len(t):], False)
                 cost = min(cost, c)
                 use[t] -= 1
             # s is included in the begin of reveresed t
             elif t.find(s[::-1]) == 0:
                 use[t] += 1
-                c = find_candidate(cost, use, t[len(s):], True)
+                c = calc_updated_cost(cost, use, t[len(s):], True)
                 cost = min(cost, c)
                 use[t] -= 1
 
@@ -61,7 +61,7 @@ def solve():
     for s in D.keys():
         use = {s: 0 for s in D.keys()}
         use[s] = 1
-        ans = find_candidate(ans, use, s, True)
+        ans = calc_updated_cost(ans, use, s, True)
     return ans if ans < INF else -1
 
 if __name__ == "__main__":
