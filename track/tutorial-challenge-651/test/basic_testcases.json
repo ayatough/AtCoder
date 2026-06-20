@@ -1,0 +1,32 @@
+[
+   {
+      "input": "in/basic/00_sample01.in",
+      "output": "out/basic/00_sample01.out",
+      "description": "[基本実装] 入力される値が「World」であるときに正答できる",
+      "description_en": "[Basic Case] The correct answer is output when the input is \"World\""
+   },
+   {
+      "input": "in/basic/00_sample02.in",
+      "output": "out/basic/00_sample02.out",
+      "description": "[基本実装] 入力される値が「track」であるときに正答できる",
+      "description_en": "[Basic Case] The correct answer is output when the input is \"track\""
+   },
+   {
+      "input": "in/basic/10_lower01.in",
+      "output": "out/basic/10_lower01.out",
+      "description": "[基本実装] 入力される値が「abracatabra」であるときに正答できる",
+      "description_en": "[Basic Case] The correct answer is output when the input is \"abracatabra\""
+   },
+   {
+      "input": "in/basic/20_upper01.in",
+      "output": "out/basic/20_upper01.out",
+      "description": "[基本実装] 入力される値が「TUTORIAL」であるときに正答できる",
+      "description_en": "[Basic Case] The correct answer is output when the input is \"TUTORIAL\""
+   },
+   {
+      "input": "in/basic/30_number01.in",
+      "output": "out/basic/30_number01.out",
+      "description": "[基本実装] 入力される値が「01234567890123456789」であるときに正答できる",
+      "description_en": "[Basic Case] The correct answer is output when the input is \"01234567890123456789\""
+   }
+]
