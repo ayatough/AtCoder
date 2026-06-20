@@ -1,0 +1,6 @@
+!*.py
+!*.jl
+*/test_*
+*/ans_*
+.venv/
+*.in
